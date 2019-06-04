@@ -3,10 +3,20 @@ version: '3'
 services:
   web:
     build: .
-    command: npm run dev
+    command: npm run start
     volumes:
       - .:/web
     ports:
       - '3000:3000'
+    stdin_open: true
+    tty: true
+
+  api:
+    build: .
+    command: npm run json-server
+    volumes:
+      - .:/web
+    ports:
+      - '4000:4000'
     stdin_open: true
     tty: true
