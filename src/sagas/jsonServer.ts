@@ -9,7 +9,7 @@ function* runGetUsers() {
     const api = getUsersFactory()
     const users = yield call(api)
 
-    yield put(getUsers.succeed(users))
+    yield put(getUsers.succeed({users}))
   } catch (err) {
     yield put(getUsers.fail(err))
   }
