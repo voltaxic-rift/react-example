@@ -1,46 +1,32 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { List, Image } from 'semantic-ui-react'
-import axios from '../services/api'
+import Spinner from './Spinner'
+import { User } from '../services/jsonServer/models'
 
-type Props = {
-  user: User
+export type UserListProps = {
+  users: User[]
+  isLoading?: boolean
 }
 
-type User = {
-  id: number
-  name: string
-  description: string
-  image: string
-}
-
-const User: React.FC<Props> = props => {
-  const {user} = props
+const UserList: React.FC<UserListProps> = ({
+  users = [],
+  isLoading = false
+}) => {
   return (
-    <List.Item>
-      <Image avatar src={user.image} />
-      <List.Content>
-        <List.Header as='a'>{user.name}</List.Header>
-      </List.Content>
-    </List.Item>
-  )
-}
-
-const UserList: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([])
-
-  const fetchUsers = async () => {
-    const res = await axios.get('/users')
-    setUsers(res.data)
-  }
-
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-
-  return (
-    <List divided verticalAlign='middle'>
-      {users.map(user => <User key={user.id} user={user} />)}
-    </List>
+    isLoading ? (
+      <Spinner />
+    ) : (
+      <List divided verticalAlign='middle'>
+        {users.map(user => (
+          <List.Item key={user.id}>
+            <Image avatar src={user.image} />
+            <List.Content>
+              <List.Header as='a'>{user.name}</List.Header>
+            </List.Content>
+          </List.Item>
+        ))}
+      </List>
+    )
   )
 }
 
