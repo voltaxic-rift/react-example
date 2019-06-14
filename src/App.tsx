@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import UserList from './containers/UserList'
 import {Container} from 'semantic-ui-react'
@@ -9,7 +9,9 @@ const App: React.FC = () => {
     <div>
       <Navbar />
       <Container text style={{ marginTop: '7em' }}>
-        <Route path="/users" component={UserList} />
+        <Switch>
+          <Route exact path="/users" component={UserList} />
+        </Switch>
       </Container>
     </div>
   )
